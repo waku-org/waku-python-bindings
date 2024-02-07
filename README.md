@@ -13,16 +13,28 @@ If need a different setup, don't hesitate con contact us on Discord. The Discord
 ## Prepare the development environment
 
 Run the following commands from the root folder:
-1. mkdir venv
-2. python3 -m venv venv/
-3. source venv/bin/activate
-4. ./venv/bin/python -m pip install -r requiremets.txt
+```bash
+mkdir venv
+```
+```bash
+python3 -m venv venv/
+```
+```bash
+source venv/bin/activate
+```
+```bash
+./venv/bin/python -m pip install -r requiremets.txt
+```
 
 ## Create a Py-Waku package
 
 Run the following commands from the root folder:
-1. source venv/bin/activate
-2. ./venv/bin/python3 -m build
+```bash
+source venv/bin/activate
+```
+```bash
+./venv/bin/python3 -m build
+```
 
 ## Test the package
 
@@ -45,16 +57,24 @@ it is likely that you would need to upgrade it.
 For that, you will need to update the submodule pointer
 to a more recent nwaku version:
 
-1. `cd vendor/nwaku`
+1. ```cd vendor/nwaku```
 2. Check out to the commit/tag as you wish
 
 Then, follow the following steps from the root folder
 to rebuild the `libwaku.so` library:
 
-1. `cd vendor/nwaku`
-2. `make libwaku -j8`
-3. `cd ../../`
-4. `cp vendor/nwaku/build/libwaku.so lib/`
+```bash
+cd vendor/nwaku
+```
+```bash
+make libwaku -j8
+```
+```bash
+cd ../../
+```
+```bash
+cp vendor/nwaku/build/libwaku.so lib/
+```
 
 Notice that the `libwaku.so` library is also distributed within
 the `Py-Waku` package.
