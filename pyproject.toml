@@ -1,0 +1,15 @@
+[project]
+name = "waku"
+version = "0.0.1"
+authors = [
+  { name="Waku Dev Team", email="ivansete@status.im" },
+]
+description = "A small example package"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["setuptools", "wheel", "cffi>=1.0.0", "Cython"]
+
+[tool.setuptools]
+py-modules = []
