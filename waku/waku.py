@@ -88,7 +88,7 @@ def process_callback(ret, char_p, len, callback):
   ## Second param - string. Gives detail of the feedback returned by the libwaku
 
   byte_string = ffi.buffer(char_p, len)[:]  # Use ffi.buffer to access memory directly
-  callback(ret, byte_string.decode('utf-8'))
+  callback(ret, byte_string)
 
 ##################################################################
 

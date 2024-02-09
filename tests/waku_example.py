@@ -4,7 +4,12 @@ import waku
 
 def handle_event(ret, msg):
   if ret == 0: ## RET_OK
-    print("Ok event received: %s" % msg)
+    msgPlain = ""
+    try:
+      msgPlain = msg.decode('utf-8')
+    except:
+      msgPlain = "[binary content]"
+    print("Ok event received: %s" % msgPlain)
   else:
     print("Error: %s" % msg)
 
@@ -61,7 +66,7 @@ default_pubsub_topic = ""
 waku.waku_default_pubsub_topic(
     ctx,
     lambda ret, msg: (
-        globals().update(default_pubsub_topic = msg),
+        globals().update(default_pubsub_topic = msg.decode('utf-8')),
         print("Default pubsub topic: %s" % msg)))
 
 print("Bind addr: {}:{}".format(args.host, args.port))

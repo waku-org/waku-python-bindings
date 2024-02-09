@@ -15,14 +15,8 @@ If need a different setup, don't hesitate con contact us on Discord. The Discord
 Run the following commands from the root folder:
 ```bash
 mkdir venv
-```
-```bash
 python3 -m venv venv/
-```
-```bash
 source venv/bin/activate
-```
-```bash
 ./venv/bin/python -m pip install -r requiremets.txt
 ```
 
@@ -31,8 +25,6 @@ source venv/bin/activate
 Run the following commands from the root folder:
 ```bash
 source venv/bin/activate
-```
-```bash
 ./venv/bin/python3 -m build
 ```
 
@@ -48,6 +40,26 @@ package to your local virtual env.
 
 ```bash
 ./venv/bin/python3 -m pip install dist/waku-0.0.1-cp310-cp310-linux_x86_64.whl
+```
+
+Current limitations of nwaku cbindings do not allow you to use DNS name in the multiaddress of a peer you want to connect to.
+Due to that, we recommend to run another local node to connect to other peers and then connect to this local node from the py-waku.
+
+```
+docker run -i -t -p 60000:60000 -p 9000:9000/udp harbor.status.im/wakuorg/nwaku:v0.24.0 --dns-discovery:true --dns-discovery-url:enrtree://ANEDLO25QVUGJOUTQFRYKWX6P4Z4GKVESBMHML7DZ6YK4LGS5FC5O@prod.wakuv2.nodes.status.im --discv5-discovery --rest --rest-address=0.0.0.0
+```
+
+Once this node is up, get the multiaddress
+
+```
+LOCAL_PEER_MA=$(curl http://127.0.0.1:8646/debug/v1/info | jq -r ".listenAddresses[0]")
+NODEKEY=$(openssl rand -hex 32)
+```
+
+You car run the `tests/waku_example.py` now as
+
+```
+./venv/bin/python3 tests/waku_example.py --peer ${LOCAL_PEER_MA} --key ${NODEKEY} -p 70000
 ```
 
 ## Update the libwaku.so library
