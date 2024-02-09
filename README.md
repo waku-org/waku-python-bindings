@@ -45,21 +45,27 @@ package to your local virtual env.
 Current limitations of nwaku cbindings do not allow you to use DNS name in the multiaddress of a peer you want to connect to.
 Due to that, we recommend to run another local node to connect to other peers and then connect to this local node from the py-waku.
 
-```
-docker run -i -t -p 60000:60000 -p 9000:9000/udp harbor.status.im/wakuorg/nwaku:v0.24.0 --dns-discovery:true --dns-discovery-url:enrtree://ANEDLO25QVUGJOUTQFRYKWX6P4Z4GKVESBMHML7DZ6YK4LGS5FC5O@prod.wakuv2.nodes.status.im --discv5-discovery --rest --rest-address=0.0.0.0
+```bash
+docker run -i -t -p 60000:60000 -p 9000:9000/udp -p 8646:8645 harbor.status.im/wakuorg/nwaku:v0.24.0 --dns-discovery:true --dns-discovery-url:enrtree://ANEDLO25QVUGJOUTQFRYKWX6P4Z4GKVESBMHML7DZ6YK4LGS5FC5O@prod.wakuv2.nodes.status.im --discv5-discovery --rest --rest-address=0.0.0.0
 ```
 
 Once this node is up, get the multiaddress
 
-```
+```bash
 LOCAL_PEER_MA=$(curl http://127.0.0.1:8646/debug/v1/info | jq -r ".listenAddresses[0]")
 NODEKEY=$(openssl rand -hex 32)
 ```
 
-You car run the `tests/waku_example.py` now as
+You can run the `tests/waku_example.py` now as
 
-```
+```bash
 ./venv/bin/python3 tests/waku_example.py --peer ${LOCAL_PEER_MA} --key ${NODEKEY} -p 70000
+```
+
+Apart from seeing messages going through the relay protocol, you can also publish a message and see it being received by the py-waku node
+
+```bash
+curl http://127.0.0.1:8646/relay/v1/messages/%2Fwaku%2F2%2Fdefault-waku%2Fproto -H "Content-Type: application/json" -d '{"payload": "'$(echo "Hello!" | base64)'", "contentTopic": "/hello/0/pywaku/plain"}'
 ```
 
 ## Update the libwaku.so library
