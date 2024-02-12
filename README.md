@@ -1,9 +1,9 @@
 
-# Py-Waku
+# Waku Python Bindings
 
 ## Introduction
 
-Py-Waku exposes a Waku module that can be used within Python projects.
+Exposes a Waku module that can be used within Python projects.
 It is fundamentally a wrapper around [nwaku](https://github.com/waku-org/nwaku)
 
 This repo has been tested with Python3 in Ubuntu.
